@@ -2,6 +2,11 @@
 *.slo
 *.lo
 *.o
+*.axf
+*.crf
+JLinkLog.txt
+*.htm
+*.lst
 
 # Compiled Dynamic libraries
 *.so
