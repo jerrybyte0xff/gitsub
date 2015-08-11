@@ -10,6 +10,9 @@
   
 #include "stm32f10x.h"
 #include "delay.h"
+#include "led.h"
+
+
 /**
   * @brief  Ö÷º¯Êý
   * @param  ÎÞ
@@ -24,47 +27,26 @@
 *************************************************************/
 
 
-
-
-/* Private macro -------------------------------------------------------------*/
-#define RCC_GPIO_LED                                 RCC_APB2Periph_GPIOD
-#define GPIO_LED_PORT                                GPIOD    
-#define GPIO_LED1                                    GPIO_Pin_2    
-#define GPIO_LED2                                    GPIO_Pin_3    
-#define GPIO_LED3                                    GPIO_Pin_4    
-#define GPIO_LED4                                    GPIO_Pin_7
-#define GPIO_LED_ALL                                 GPIO_LED1 |GPIO_LED2 |GPIO_LED3 |GPIO_LED4 
-
-
-void LEDInit(void)
-{
-	GPIO_InitTypeDef GPIO_InitStructure;
-	/* Enable GPIOB, GPIOC and AFIO clock */
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOD , ENABLE);  //RCC_APB2Periph_AFIO
-	
-	/* LEDs pins configuration */
-	GPIO_InitStructure.GPIO_Pin = GPIO_LED_ALL;
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
-	GPIO_Init(GPIO_LED_PORT, &GPIO_InitStructure);
-}
-
-
-
-
 int main(void)
 {
+     u8 ledcount;
   	 LEDInit();
-	 delay_init(336);
+	 delay_init(168);
 	 while(1)
 	  {
-	    delay_ms (1000);
-	    GPIO_ResetBits(GPIO_LED_PORT, GPIO_LED_ALL);
-	    delay_ms (1000);
-		GPIO_SetBits(GPIO_LED_PORT, GPIO_LED_ALL);
+	    delay_ms (200);
+	    Led_Turn_on_all();
+	    delay_ms (200);
+		Led_Turn_off_all();
+		delay_ms (200);
+		for (ledcount = 0; ledcount < 4; ledcount++)
+		{
+			Led_Turn_on(ledcount);
+			delay_ms (200);
+		}
+		Led_Turn_off_all();
 	  
 	  }
-	  /* add your code here ^_^. */
 }
 
 /*********************************************END OF FILE**********************/

@@ -11,3 +11,4 @@
 ..\..\Output\main.o: ..\..\Libraries\FWlib\inc\misc.h
 ..\..\Output\main.o: ..\..\SYSTEM\delay\delay.h
 ..\..\Output\main.o: ..\..\SYSTEM\sys\sys.h
+..\..\Output\main.o: ..\..\HardWare\led.h
