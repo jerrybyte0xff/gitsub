@@ -15,3 +15,5 @@
 ..\..\Output\ssd1963_driver.o: ..\..\Libraries\FWlib\inc\misc.h
 ..\..\Output\ssd1963_driver.o: C:\Program Files (x86)\ARM\RV31\INC\math.h
 ..\..\Output\ssd1963_driver.o: ..\..\HardWare\ascii1608.h
+..\..\Output\ssd1963_driver.o: ..\..\SYSTEM\usart\usart.h
+..\..\Output\ssd1963_driver.o: C:\Program Files (x86)\ARM\RV31\INC\stdio.h

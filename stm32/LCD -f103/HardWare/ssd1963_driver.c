@@ -14,7 +14,7 @@
 #include "ssd1963_driver.h"
 
 #include "ascii1608.h"
-
+#include "usart.h"	
 
 
 static void LCD_SSD1963_write_data(u16 color)
@@ -43,7 +43,14 @@ static void LCD_SSD1963_write_command(u16 command)
   
 }
 
-
+static void LCD_SSD1963_read_parameter(u16 *p_parameter)   
+{  
+	
+		LCD_WR_H
+		LCD_RS_L
+		*p_parameter = LCD_DATAREAD	 
+		LCD_RS_H
+}	
 	
 
 /**
@@ -72,6 +79,7 @@ void LCD_SSD1963_clear(u32 color)
 		LCD_SSD1963_write_parameter(VDP);
 
 	    LCD_SSD1963_write_command(0X002C);	
+	printf("before draw\n");
 	while(l--)		 
 	{
 		for(w = 0; w < HDP+1; w++) 
@@ -82,6 +90,8 @@ void LCD_SSD1963_clear(u32 color)
 		}
 		
 	}
+	printf(" draw done\n");
+	
 }
 
 
@@ -96,12 +106,37 @@ static void LCD_SSD1963_Pins_Config(void)
 	GPIO_Init(GPIOE, &GPIO_InitStructure);
 	
 	/* R Data */
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_10 || 
-	                              GPIO_Pin_11 || 
-	                              GPIO_Pin_12 || 
-	                              GPIO_Pin_13 ;
+	GPIO_InitStructure.GPIO_Pin = LCD_SSD1963_Pin_CS || 
+	                              LCD_SSD1963_Pin_RS || 
+	                              LCD_SSD1963_Pin_RD || 
+	                              LCD_SSD1963_Pin_WR ;
 	                              
 	GPIO_Init(GPIOB, &GPIO_InitStructure);
+
+}
+
+
+static void LCD_SSD1963_DataPins_Config_Out(void)
+{
+	GPIO_InitTypeDef GPIO_InitStructure;
+
+	/* Data */
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_All;
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
+	GPIO_Init(GPIOE, &GPIO_InitStructure);
+
+}
+
+static void LCD_SSD1963_DataPins_Config_In(void)
+{
+	GPIO_InitTypeDef GPIO_InitStructure;
+
+	/* Data */
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_All;
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPD;
+	GPIO_Init(GPIOE, &GPIO_InitStructure);
 
 }
 
@@ -113,113 +148,142 @@ static void LCD_SSD1963_Pins_Config(void)
   */
 void LCD_SSD1963_init(void)
 {
+	u16 read_temp;
 
-		LCD_SSD1963_Pins_Config();
-		delay_ms(50);
-			
+	LCD_SSD1963_Pins_Config();
+	delay_ms(50);
+	LCD_CS_L
+		
 	/* Set PLL MN */
-		LCD_SSD1963_write_command(0x00E2);		//PLL = In *N / M
-		LCD_SSD1963_write_parameter(0x0024);    //N = 36, M = 3
-		LCD_SSD1963_write_parameter(0x0003);							 
-		LCD_SSD1963_write_parameter(0x0004);
- 
-	/* Set PLL */
-		LCD_SSD1963_write_command(0x00E0);  
-		LCD_SSD1963_write_parameter(0x0001);  /* PLL enable  */
-		delay_ms(100);	      
-		LCD_SSD1963_write_command(0x00E0);	  /* Lock PLL   */
-		LCD_SSD1963_write_parameter(0x0003);
-		delay_ms(100);
+	LCD_SSD1963_write_command(0x00E2);		//PLL = In *N / M
+	LCD_SSD1963_write_parameter(0x0024);    //N = 36, M = 3
+	LCD_SSD1963_write_parameter(0x0003);							 
+	LCD_SSD1963_write_parameter(0x0004);
+	
+	printf("Set PLL MN Success \n");
 
-  /* Software Reset */
-		LCD_SSD1963_write_command(0x0001);  
-		delay_ms(100);
+    /* Set PLL */
+	LCD_SSD1963_write_command(0x00E0);  
+	LCD_SSD1963_write_parameter(0x0001);  /* PLL enable  */
+	delay_ms(100);	      
+	LCD_SSD1963_write_command(0x00E0);	  /* Lock PLL   */
+	LCD_SSD1963_write_parameter(0x0003);
+	delay_ms(100);
+
+   /* Software Reset */
+	LCD_SSD1963_write_command(0x0001);  
+	delay_ms(100);
+	printf("Software Reset \n");
 	
-  /* Set LSHIFT Frequency */
-		LCD_SSD1963_write_command(0x00E6);	  
-		LCD_SSD1963_write_parameter(0x0003);
-		LCD_SSD1963_write_parameter(0x0055);
-		LCD_SSD1963_write_parameter(0x0055);
+
+	/* Set LSHIFT Frequency */
+	LCD_SSD1963_write_command(0x00E6);	  
+	LCD_SSD1963_write_parameter(0x0003);
+	LCD_SSD1963_write_parameter(0x0055);
+	LCD_SSD1963_write_parameter(0x0055);
+	printf("Set LSHIFT Frequency \n");
+
+ 	/* Set LCD Mode */
+	LCD_SSD1963_write_command(0x00B0);	      	  
+	LCD_SSD1963_write_parameter(0x0000);
+	LCD_SSD1963_write_parameter(0x0000);
+	LCD_SSD1963_write_parameter(HDP>>8);  /*Set the horizontal panel size*/
+	LCD_SSD1963_write_parameter(HDP);
+	LCD_SSD1963_write_parameter(VDP>>8);  /*Set the horizontal panel size*/
+	LCD_SSD1963_write_parameter(VDP);
+	LCD_SSD1963_write_parameter(0x0000);
 	
-  /* Set LCD Mode */
-		LCD_SSD1963_write_command(0x00B0);	      	  
-		LCD_SSD1963_write_parameter(0x0000);
-		LCD_SSD1963_write_parameter(0x0000);
-		LCD_SSD1963_write_parameter(HDP>>8);  /*Set the horizontal panel size*/
-		LCD_SSD1963_write_parameter(HDP);
-		LCD_SSD1963_write_parameter(VDP>>8);  /*Set the horizontal panel size*/
-		LCD_SSD1963_write_parameter(VDP);
-		LCD_SSD1963_write_parameter(0x0000);
+	/* Get LCD Mode */
+	LCD_SSD1963_write_command(0x00B1);
+	LCD_SSD1963_DataPins_Config_In();
+	LCD_SSD1963_read_parameter(&read_temp);
+	printf("Get LCD Mode[%d]\n",read_temp);
+	LCD_SSD1963_read_parameter(&read_temp);
+	printf("Get LCD Mode[%d]\n",read_temp);
+	LCD_SSD1963_read_parameter(&read_temp);
+	printf("Get LCD Mode[%d]\n",read_temp);
+	LCD_SSD1963_read_parameter(&read_temp);
+	printf("Get LCD Mode[%d]\n",read_temp);
+	LCD_SSD1963_read_parameter(&read_temp);
+	printf("Get LCD Mode[%d]\n",read_temp);
+	LCD_SSD1963_read_parameter(&read_temp);
+	printf("Get LCD Mode[%d]\n",read_temp);
+	LCD_SSD1963_read_parameter(&read_temp);
+	printf("Get LCD Mode[%d]\n",read_temp);
+	LCD_SSD1963_DataPins_Config_Out();
 	
-  /* Set Horizontal Period */
-		LCD_SSD1963_write_command(0x00B4);	         
-		LCD_SSD1963_write_parameter(HT>>8);  //Set HT
-		LCD_SSD1963_write_parameter(HT);
-		LCD_SSD1963_write_parameter(HPS>>8);  //Set HPS
-		LCD_SSD1963_write_parameter(HPS);
-		LCD_SSD1963_write_parameter(HPW);			         //Set HPW
-		LCD_SSD1963_write_parameter(LPS>>8);  //Set HPS
-		LCD_SSD1963_write_parameter(LPS);
-		LCD_SSD1963_write_parameter(0x0000);
 	
-  /* Set Vertical Period */
-		LCD_SSD1963_write_command(0x00B6);	           //VSYNC
-		LCD_SSD1963_write_parameter(VT>>8);   //Set VT
-		LCD_SSD1963_write_parameter(VT);
-		LCD_SSD1963_write_parameter(VPS>>8);  //Set VPS
-		LCD_SSD1963_write_parameter(VPS);
-		LCD_SSD1963_write_parameter(VPW);			         //Set VPW
-		LCD_SSD1963_write_parameter((FPS>>8));  //Set FPS
-		LCD_SSD1963_write_parameter(FPS);
-	
-  /* Set GPIO Value */
-		LCD_SSD1963_write_command(0x00BA);     
-		LCD_SSD1963_write_parameter(0x0005);     //GPIO[3:0] out 1
-			
+
+    /* Set Horizontal Period */
+	LCD_SSD1963_write_command(0x00B4);	         
+	LCD_SSD1963_write_parameter(HT>>8);  //Set HT
+	LCD_SSD1963_write_parameter(HT);
+	LCD_SSD1963_write_parameter(HPS>>8);  //Set HPS
+	LCD_SSD1963_write_parameter(HPS);
+	LCD_SSD1963_write_parameter(HPW);			         //Set HPW
+	LCD_SSD1963_write_parameter(LPS>>8);  //Set HPS
+	LCD_SSD1963_write_parameter(LPS);
+	LCD_SSD1963_write_parameter(0x0000);
+
+ 	/*Set Vertical Period */
+	LCD_SSD1963_write_command(0x00B6);	           //VSYNC
+	LCD_SSD1963_write_parameter(VT>>8);   //Set VT
+	LCD_SSD1963_write_parameter(VT);
+	LCD_SSD1963_write_parameter(VPS>>8);  //Set VPS
+	LCD_SSD1963_write_parameter(VPS);
+	LCD_SSD1963_write_parameter(VPW);			         //Set VPW
+	LCD_SSD1963_write_parameter((FPS>>8));  //Set FPS
+	LCD_SSD1963_write_parameter(FPS);
+
+ 	/* Set GPIO Value */
+	LCD_SSD1963_write_command(0x00BA);     
+	LCD_SSD1963_write_parameter(0x0005);     //GPIO[3:0] out 1
+		
 	/* Set GPIO Configuration */
-		LCD_SSD1963_write_command(0x00B8);    
-		LCD_SSD1963_write_parameter(0x0007);    //GPIO3=input, GPIO[2:0]=output
-		LCD_SSD1963_write_parameter(0x0001);    //GPIO0 normal
-  
-	
-	/* Set Address Mode *///under search
-		LCD_SSD1963_write_command(0x0036);      
-		LCD_SSD1963_write_parameter(0x0008);
-  
-	/* Pixel Data Interface */
-		LCD_SSD1963_write_command(0x00F0);    
+	LCD_SSD1963_write_command(0x00B8);    
+	LCD_SSD1963_write_parameter(0x0007);    //GPIO3=input, GPIO[2:0]=output
+	LCD_SSD1963_write_parameter(0x0001);    //GPIO0 normal
 
-		LCD_SSD1963_write_parameter(0x0003);
-		delay_ms(500);
-	
+
+	/* Set Address Mode *///under search
+	LCD_SSD1963_write_command(0x0036);      
+	LCD_SSD1963_write_parameter(0x0008);
+
+	/* Pixel Data Interface */
+	LCD_SSD1963_write_command(0x00F0);    
+
+	LCD_SSD1963_write_parameter(0x0003);
+	delay_ms(100);
+
 	/* Set Display On */
-		LCD_SSD1963_write_command(0x0029);        //display on
-  
+	LCD_SSD1963_write_command(0x0029);        //display on
+
 	/* Set PWM Configuration */
-		LCD_SSD1963_write_command(0x00BE);        //set PWM for B/L
-		LCD_SSD1963_write_parameter(0x0006);
-		LCD_SSD1963_write_parameter(0x0080);
-		LCD_SSD1963_write_parameter(0x0001);
-		LCD_SSD1963_write_parameter(0x00f0);
-		LCD_SSD1963_write_parameter(0x0000);
-		LCD_SSD1963_write_parameter(0x0000);
-	
-  /* Set DBC Configuration */
-		LCD_SSD1963_write_command(0x00d0);
-		LCD_SSD1963_write_parameter(0x000d);
-			
-		LCD_SSD1963_clear(BLACK);
+	LCD_SSD1963_write_command(0x00BE);        //set PWM for B/L
+	LCD_SSD1963_write_command(0x0006);
+	LCD_SSD1963_write_parameter(0x0080);
+	LCD_SSD1963_write_parameter(0x0001);
+	LCD_SSD1963_write_parameter(0x00f0);
+	LCD_SSD1963_write_parameter(0x0000);
+	LCD_SSD1963_write_parameter(0x0000);
+
+ 	/* Set DBC Configuration */
+	LCD_SSD1963_write_command(0x00d0);
+	LCD_SSD1963_write_parameter(0x000d);
+		
+	LCD_SSD1963_clear(BLACK);
+
 }
 
-/**
-  * @brief  Draw a point.
-  * @param  xpos can be 0 to HDP and ypos can be 0 to VDP.
-  *         color:Color value defined in ssd1963_driver.h.
-  * @retval None.
-  */
+/* @brief  Draw a point.
+ *@param  xpos can be 0 to HDP and ypos can be 0 to VDP.
+        color:Color value defined in ssd1963_driver.h.
+ *@retval None.
+	*/
+
 void LCD_SSD1963_drawpoint(u32 xpos, u32 ypos, u32 color)
 {
-  /* Set the Cursor */
+ 	/* Set the Cursor */
 	LCD_SSD1963_write_command(0x2A);	
 	LCD_SSD1963_write_parameter(xpos>>8);	    
 	LCD_SSD1963_write_parameter(xpos);
@@ -231,7 +295,7 @@ void LCD_SSD1963_drawpoint(u32 xpos, u32 ypos, u32 color)
 	LCD_SSD1963_write_parameter(ypos);
 	LCD_SSD1963_write_parameter(VDP>>8);	    
 	LCD_SSD1963_write_parameter(VDP);
-	
+
 	/* Write Memory Start */
 	LCD_SSD1963_write_command(0x002C);       
 	LCD_SSD1963_write_data(color); 

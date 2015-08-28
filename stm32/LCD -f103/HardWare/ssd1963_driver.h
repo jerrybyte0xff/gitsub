@@ -23,27 +23,36 @@
 
 //16-bit DataPort (565 format)
 #define LCD_DATAPORT(DATA)     GPIO_Write(GPIOE, DATA);
+#define LCD_DATAREAD		   GPIO_ReadInputData(GPIOE);
+
 
 /* LCD Control pins */
-#define LCD_Pin_WR      GPIO_Pin_13
-#define LCD_PORT_WR     GPIOB
-#define LCD_CLK_WR      RCC_APB2Periph_GPIOB
+#define LCD_SSD1963_Pin_WR      GPIO_Pin_13
+#define LCD_SSD1963_PORT_WR     GPIOB
+#define LCD_SSD1963_CLK_WR      RCC_APB2Periph_GPIOB
 
-#define LCD_Pin_RS      GPIO_Pin_11
-#define LCD_PORT_RS     GPIOB
-#define LCD_CLK_RS      RCC_APB2Periph_GPIOB
+#define LCD_SSD1963_Pin_RS      GPIO_Pin_11
+#define LCD_SSD1963_PORT_RS     GPIOB
+#define LCD_SSD1963_CLK_RS      RCC_APB2Periph_GPIOB
 
-#define LCD_Pin_RD      GPIO_Pin_12
-#define LCD_PORT_RD     GPIOB
-#define LCD_CLK_RD      RCC_APB2Periph_GPIOB
+#define LCD_SSD1963_Pin_RD      GPIO_Pin_12
+#define LCD_SSD1963_PORT_RD     GPIOB
+#define LCD_SSD1963_CLK_RD      RCC_APB2Periph_GPIOB
+
+#define LCD_SSD1963_Pin_CS      GPIO_Pin_10
+#define LCD_SSD1963_PORT_CS     GPIOB
+#define LCD_SSD1963_CLK_CS      RCC_APB2Periph_GPIOB
 
 
-#define LCD_WR_H  GPIO_SetBits(LCD_PORT_WR, LCD_Pin_WR);
-#define LCD_WR_L  GPIO_ResetBits(LCD_PORT_WR, LCD_Pin_WR);
+#define LCD_WR_H  GPIO_SetBits(LCD_SSD1963_PORT_WR, LCD_SSD1963_Pin_WR);
+#define LCD_WR_L  GPIO_ResetBits(LCD_SSD1963_PORT_WR, LCD_SSD1963_Pin_WR);
  
 
-#define LCD_RS_H  GPIO_SetBits(LCD_PORT_RS, LCD_Pin_RS);
-#define LCD_RS_L  GPIO_ResetBits(LCD_PORT_RS, LCD_Pin_RS);
+#define LCD_RS_H  GPIO_SetBits(LCD_SSD1963_PORT_RS, LCD_SSD1963_Pin_RS);
+#define LCD_RS_L  GPIO_ResetBits(LCD_SSD1963_PORT_RS, LCD_SSD1963_Pin_RS);
+
+#define LCD_CS_H  GPIO_SetBits(LCD_SSD1963_PORT_CS, LCD_SSD1963_Pin_CS);
+#define LCD_CS_L  GPIO_ResetBits(LCD_SSD1963_PORT_CS, LCD_SSD1963_Pin_CS);
 /** @defgroup 16-bit (565 format) color value.
   * @{
   */
@@ -66,15 +75,15 @@
   	
   	
   	
-#define  HDP  470    //Horizontal Display Period
-#define  HT   480   //Horizontal Total
+#define  HDP  469    //Horizontal Display Period
+#define  HT   479   //Horizontal Total
 #define  HPS  51     //LLINE Pulse Start Position
 #define  LPS  3      //	Horizontal Display Period Start Position
 #define  HPW  8      //	LLINE Pulse Width
 
 
-#define  VDP  864	 //Vertical Display Period
-#define  VT   854    //Vertical Total
+#define  VDP  853	 //Vertical Display Period
+#define  VT   863    //Vertical Total
 #define  VPS  24	 //	LFRAME Pulse Start Position
 #define  FPS  23	 //Vertical Display Period Start Positio
 #define  VPW  3 	 // LFRAME Pulse Width
