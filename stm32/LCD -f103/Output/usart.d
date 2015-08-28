@@ -9,6 +9,11 @@
 ..\..\Output\usart.o: ..\..\Libraries\CMSIS\stm32f10x.h
 ..\..\Output\usart.o: ..\..\Libraries\FWlib\inc\stm32f10x_rcc.h
 ..\..\Output\usart.o: ..\..\Libraries\FWlib\inc\stm32f10x_usart.h
+..\..\Output\usart.o: ..\..\HardWare\ssd1963_driver.h
+..\..\Output\usart.o: ..\..\SYSTEM\delay\delay.h
+..\..\Output\usart.o: ..\..\SYSTEM\sys\sys.h
+..\..\Output\usart.o: ..\..\HardWare\ascii1608.h
+..\..\Output\usart.o: C:\Program Files (x86)\ARM\RV31\INC\math.h
 ..\..\Output\usart.o: ..\..\Libraries\FWlib\inc\misc.h
 ..\..\Output\usart.o: ..\..\SYSTEM\usart\usart.h
 ..\..\Output\usart.o: C:\Program Files (x86)\ARM\RV31\INC\stdio.h

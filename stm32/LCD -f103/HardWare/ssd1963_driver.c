@@ -53,7 +53,7 @@ static void LCD_SSD1963_write_command(u16 command)
 void LCD_SSD1963_clear(u32 color)
 {
   
-	unsigned int l=VDP+1,w;
+	 u16 l = VDP+1,w;
 
 	/*  X  */
 		LCD_SSD1963_write_command(0X002A);	
@@ -124,14 +124,14 @@ void LCD_SSD1963_init(void)
 	/* Set PLL */
 		LCD_SSD1963_write_command(0x00E0);  
 		LCD_SSD1963_write_parameter(0x0001);  /* PLL enable  */
-		delay_ms(100)	      
+		delay_ms(100);	      
 		LCD_SSD1963_write_command(0x00E0);	  /* Lock PLL   */
 		LCD_SSD1963_write_parameter(0x0003);
-		delay_ms(100)
+		delay_ms(100);
 
   /* Software Reset */
 		LCD_SSD1963_write_command(0x0001);  
-		delay_ms(100)
+		delay_ms(100);
 	
   /* Set LSHIFT Frequency */
 		LCD_SSD1963_write_command(0x00E6);	  
@@ -188,7 +188,7 @@ void LCD_SSD1963_init(void)
 		LCD_SSD1963_write_command(0x00F0);    
 
 		LCD_SSD1963_write_parameter(0x0003);
-		delay_ms(500)
+		delay_ms(500);
 	
 	/* Set Display On */
 		LCD_SSD1963_write_command(0x0029);        //display on
@@ -243,11 +243,11 @@ void LCD_SSD1963_drawpoint(u32 xpos, u32 ypos, u32 color)
   * @retval -1:xpos of ypos is not Expected.
   *          0:The char is puted succeeded.
   */
-int LCD_SSD1963_putchar(u32 xpos,u32 ypos,uint_8 asc2num,u32 pencolor,u32 backcolor)
+s8 LCD_SSD1963_putchar(u32 xpos,u32 ypos,u8 asc2num,u32 pencolor,u32 backcolor)
 {       
 
-    uint_8 temp;
-    uint_8 pos,t;
+    u8 temp;
+    u8 pos,t;
 	
     if(xpos>(HDP-7)||ypos>(VDP-15)) return -1;		    
 
@@ -279,7 +279,7 @@ int LCD_SSD1963_putchar(u32 xpos,u32 ypos,uint_8 asc2num,u32 pencolor,u32 backco
   * @retval -1:xpos of ypos is not expected.
   *          0:The string is puted succeeded.
   */
-int LCD_SSD1963_putstring(u32 xpos,u32 ypos,const char* p,u32 pencolor,u32 backcolor)
+s8 LCD_SSD1963_putstring(u32 xpos,u32 ypos,const char* p,u32 pencolor,u32 backcolor)
 {         
     while(*p!='\0')
     {       
@@ -302,7 +302,7 @@ void LCD_SSD1963_drawline(u32 xsta,u32 ysta,u32 xend,u32 yend,u32 color)
 {
  
 		
- int dx,dy,e;
+ s8 dx,dy,e;
  dx=xend-xsta; 
  dy=yend-ysta;
     
@@ -448,7 +448,7 @@ static void LCD_SSD1963_windowmax(u32 xsta,u32 ysta,u32 xend,u32 yend)
   *         color:Color value defined in ssd1963_driver.h.
   * @retval None.
   */
-void LCD_SSD1963_drawrectangle(u32 xsta, u32 ysta, u32 xend, u32 yend,uint_8 if_fill, u32 color)
+void LCD_SSD1963_drawrectangle(u32 xsta, u32 ysta, u32 xend, u32 yend,u8 if_fill, u32 color)
 {
     u32 n;
 	if(if_fill==1)
@@ -474,10 +474,10 @@ void LCD_SSD1963_drawrectangle(u32 xsta, u32 ysta, u32 xend, u32 yend,uint_8 if_
   *         color:Color value defined in ssd1963_driver.h.
   * @retval None.
   */
-void LCD_SSD1963_drawcircle(u32 x0, u32 y0, u32 r,uint_8 if_fill, u32 color)
+void LCD_SSD1963_drawcircle(u32 x0, u32 y0, u32 r,u8 if_fill, u32 color)
 {
-	int_32 a=0,b=r;
-	int_32 di=3-(r<<1);
+	u32 a=0,b=r;
+	s32 di=3-(r<<1);
 		         
 	while(a<=b)
 	{
@@ -489,17 +489,17 @@ void LCD_SSD1963_drawcircle(u32 x0, u32 y0, u32 r,uint_8 if_fill, u32 color)
 		LCD_SSD1963_drawpoint(x0+a, y0-b, color); 
 		LCD_SSD1963_drawpoint(x0+a, y0+b, color);  
 		LCD_SSD1963_drawpoint(x0-b, y0+a, color); 
-  if(if_fill==1)
-{   
-	  LCD_SSD1963_drawline(x0-b,y0-a,x0,y0,color);	
-    LCD_SSD1963_drawline(x0,y0,x0+b,y0-a,color);	
-	  LCD_SSD1963_drawline(x0-a,y0+b,x0,y0,color);
-    LCD_SSD1963_drawline(x0-a,y0-b,x0,y0,color);	
-    LCD_SSD1963_drawline(x0+b,y0+a,x0,y0,color);	
-    LCD_SSD1963_drawline(x0+a,y0-b,x0,y0,color);	
-    LCD_SSD1963_drawline(x0+a,y0+b,x0,y0,color);	
-	  LCD_SSD1963_drawline(x0-b,y0+a,x0,y0,color);
-}
+		if(if_fill==1)
+		{   
+			LCD_SSD1963_drawline(x0-b,y0-a,x0,y0,color);	
+		    LCD_SSD1963_drawline(x0,y0,x0+b,y0-a,color);	
+			LCD_SSD1963_drawline(x0-a,y0+b,x0,y0,color);
+		    LCD_SSD1963_drawline(x0-a,y0-b,x0,y0,color);	
+		    LCD_SSD1963_drawline(x0+b,y0+a,x0,y0,color);	
+		    LCD_SSD1963_drawline(x0+a,y0-b,x0,y0,color);	
+		    LCD_SSD1963_drawline(x0+a,y0+b,x0,y0,color);	
+			LCD_SSD1963_drawline(x0-b,y0+a,x0,y0,color);
+		}
 		a++;
 
 		/* Bresenham */     

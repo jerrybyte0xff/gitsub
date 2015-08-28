@@ -48,7 +48,7 @@
           <CreateLib>0</CreateLib>
           <CreateHexFile>1</CreateHexFile>
           <DebugInformation>1</DebugInformation>
-          <BrowseInformation>1</BrowseInformation>
+          <BrowseInformation>0</BrowseInformation>
           <ListingPath>..\..\Listing\</ListingPath>
           <HexFormatSelection>1</HexFormatSelection>
           <Merge32K>0</Merge32K>
@@ -612,6 +612,11 @@
               <FileName>ili9806e.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\HardWare\ili9806e.c</FilePath>
+            </File>
+            <File>
+              <FileName>ssd1963_driver.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\HardWare\ssd1963_driver.c</FilePath>
             </File>
           </Files>
         </Group>

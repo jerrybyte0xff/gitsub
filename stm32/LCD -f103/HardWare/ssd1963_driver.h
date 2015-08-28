@@ -84,14 +84,14 @@
   * @{
   */
 
-void LCD_SSD1963_clear(u32 color);
-void LCD_SSD1963_init(void);
-void LCD_SSD1963_drawpoint(u32 xpos, u32 ypos, u32 color);
-int LCD_SSD1963_putchar(u32 xpos,u32 ypos,uint_8 asc2num,u32 pencolor,u32 backcolor);
-int LCD_SSD1963_putstring(u32 xpos,u32 ypos,const char* p,u32 pencolor,u32 backcolor);
-void LCD_SSD1963_drawline(u32 xsta,u32 ysta,u32 xend,u32 yend,u32 color);
-void LCD_SSD1963_drawrectangle(u32 xsta, u32 ysta, u32 xend, u32 yend,uint_8 if_fill, u32 color);
-void LCD_SSD1963_drawcircle(u32 x0, u32 y0, u32 r,uint_8 if_fill, u32 color);
+extern void LCD_SSD1963_clear(u32 color);
+extern void LCD_SSD1963_init(void);
+extern void LCD_SSD1963_drawpoint(u32 xpos, u32 ypos, u32 color);
+extern s8 LCD_SSD1963_putchar(u32 xpos,u32 ypos,u8 asc2num,u32 pencolor,u32 backcolor);
+extern s8 LCD_SSD1963_putstring(u32 xpos,u32 ypos,const char* p,u32 pencolor,u32 backcolor);
+extern void LCD_SSD1963_drawline(u32 xsta,u32 ysta,u32 xend,u32 yend,u32 color);
+extern void LCD_SSD1963_drawrectangle(u32 xsta, u32 ysta, u32 xend, u32 yend,u8 if_fill, u32 color);
+extern void LCD_SSD1963_drawcircle(u32 x0, u32 y0, u32 r,u8 if_fill, u32 color);
 #endif
 
 

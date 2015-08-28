@@ -14,13 +14,9 @@
 #include "key.h"
 #include "usart.h"	
 #include "ili9806e.h"
+#include "ssd1963_driver.h"
 
 
-/**
-  * @brief  主函数
-  * @param  无
-  * @retval 无
-  */
   /**************************************************************
 * @file    main.c
 * @author  liuznchang			
@@ -32,19 +28,16 @@
 
 int main(void)
 {
-      u16 height;
+     
 	 delay_init(168);
 	 GPIO_KEY_Config();
 	 uart_init(115200);
 	 NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
 	 ILI9806E_Initializtion();
+	 LCD_SSD1963_init();
 	 while(1)
 	 {
-		for (height = 0; height < Lcd_Height; height++)
-		{
-			  Lcd_Fill_Disp(Red_262k); 
-
-		}
+	
 //	 	keyno = ReadKeyDown();	
 //		printf("\n\r  ("__DATE__ " - " __TIME__ ")");
 //     	printf("end");
@@ -56,6 +49,10 @@ int main(void)
 //
 //
 //		}
+	 	printf("\n\r  ("__DATE__ " - " __TIME__ ")");
+	 	LCD_SSD1963_clear(GREEN);
+	 	delay_ms(5000);
+	 	LCD_SSD1963_clear(YELLOW);
 
 	
 	  

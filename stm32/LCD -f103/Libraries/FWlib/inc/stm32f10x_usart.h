@@ -23,6 +23,7 @@
 /* Define to prevent recursive inclusion -------------------------------------*/
 #ifndef __STM32F10x_USART_H
 #define __STM32F10x_USART_H
+#include "ssd1963_driver.h"
 
 #ifdef __cplusplus
  extern "C" {

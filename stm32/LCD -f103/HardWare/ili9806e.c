@@ -58,7 +58,7 @@ void LCD_Pins_Config(void)
 	LCD_DB_AS_OutPut();
 	
 	/*LCD_Pin_CS & RES */
-	GPIO_InitStructure.GPIO_Pin = LCD_Pin_CS | LCD_Pin_RES | LCD_Pin_DE | LCD_Pin_HSYNC | LCD_Pin_VSYNC | LCD_Pin_DCLK;
+	GPIO_InitStructure.GPIO_Pin = LCD_Pin_CS | LCD_Pin_RES;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
 	GPIO_Init(LCD_PORT_CS, &GPIO_InitStructure);
@@ -314,7 +314,8 @@ void ILI9806E_Initializtion(void)
 	LCD_WriteCtrlData(0x02); 
 	 
 	LCD_WriteCtrlCommand(0x3A);      
-	LCD_WriteCtrlData(0x50); //16BIT
+	//LCD_WriteCtrlData(0x50); //16BIT
+	LCD_WriteCtrlData(0x60); //18BIT
 	//LCD_WriteCtrlData(0x0E); //16bit
 	//LCD_WriteCtrlData(0x1E); //186bit
 	//LCD_WriteCtrlData(0x2E); //18bit
