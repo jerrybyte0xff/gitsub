@@ -65,17 +65,20 @@
 #define RGB(r,g,b) (u16)( (r/0x08 << 11) | (g/0x08<< 6) | b/0x08 )
   	
   	
- #define  Lcd_Height           854
-#define  Lcd_Width            480
-#define  TVP                  2
-#define  TVB                  2
-#define  TVF                  4
-#define  THP                  2
-#define  THB                  8
-#define  THF                  6	
   	
   	
-  	
+#define  HDP  470    //Horizontal Display Period
+#define  HT   480   //Horizontal Total
+#define  HPS  51     //LLINE Pulse Start Position
+#define  LPS  3      //	Horizontal Display Period Start Position
+#define  HPW  8      //	LLINE Pulse Width
+
+
+#define  VDP  864	 //Vertical Display Period
+#define  VT   854    //Vertical Total
+#define  VPS  24	 //	LFRAME Pulse Start Position
+#define  FPS  23	 //Vertical Display Period Start Positio
+#define  VPW  3 	 // LFRAME Pulse Width
 
 /** @defgroup Exported functions.
   * @{
