@@ -13,6 +13,8 @@
 
 #include "ssd1963_driver.h"
 
+#include "ascii1608.h"
+
 
 
 static void LCD_SSD1963_write_data(u16 color)
@@ -255,7 +257,7 @@ s8 LCD_SSD1963_putchar(u32 xpos,u32 ypos,u8 asc2num,u32 pencolor,u32 backcolor)
 	
 	for(pos=0;pos<16;pos++)
 	{
-		 temp=ascii_1608_table[asc2num][pos];		
+		 temp=LCD_ascii_1608_table[asc2num][pos];		
 		for(t=0;t<8;t++)
 	    {                 
 	        if(temp&0x01)			        

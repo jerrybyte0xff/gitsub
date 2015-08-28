@@ -13,5 +13,4 @@
 ..\..\Output\stm32f10x_usart.o: ..\..\Libraries\FWlib\inc\stm32f10x_rcc.h
 ..\..\Output\stm32f10x_usart.o: ..\..\Libraries\FWlib\inc\stm32f10x_usart.h
 ..\..\Output\stm32f10x_usart.o: ..\..\Libraries\FWlib\inc\misc.h
-..\..\Output\stm32f10x_usart.o: ..\..\HardWare\ascii1608.h
 ..\..\Output\stm32f10x_usart.o: C:\Program Files (x86)\ARM\RV31\INC\math.h

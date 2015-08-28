@@ -12,6 +12,5 @@
 ..\..\Output\stm32f10x_dac.o: ..\..\HardWare\ssd1963_driver.h
 ..\..\Output\stm32f10x_dac.o: ..\..\SYSTEM\delay\delay.h
 ..\..\Output\stm32f10x_dac.o: ..\..\SYSTEM\sys\sys.h
-..\..\Output\stm32f10x_dac.o: ..\..\HardWare\ascii1608.h
 ..\..\Output\stm32f10x_dac.o: C:\Program Files (x86)\ARM\RV31\INC\math.h
 ..\..\Output\stm32f10x_dac.o: ..\..\Libraries\FWlib\inc\misc.h

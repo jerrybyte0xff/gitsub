@@ -12,6 +12,5 @@
 ..\..\Output\delay.o: ..\..\Libraries\FWlib\inc\stm32f10x_usart.h
 ..\..\Output\delay.o: ..\..\HardWare\ssd1963_driver.h
 ..\..\Output\delay.o: ..\..\SYSTEM\delay\delay.h
-..\..\Output\delay.o: ..\..\HardWare\ascii1608.h
 ..\..\Output\delay.o: C:\Program Files (x86)\ARM\RV31\INC\math.h
 ..\..\Output\delay.o: ..\..\Libraries\FWlib\inc\misc.h

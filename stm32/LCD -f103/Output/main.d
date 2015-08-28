@@ -11,7 +11,6 @@
 ..\..\Output\main.o: ..\..\HardWare\ssd1963_driver.h
 ..\..\Output\main.o: ..\..\SYSTEM\delay\delay.h
 ..\..\Output\main.o: ..\..\SYSTEM\sys\sys.h
-..\..\Output\main.o: ..\..\HardWare\ascii1608.h
 ..\..\Output\main.o: C:\Program Files (x86)\ARM\RV31\INC\math.h
 ..\..\Output\main.o: ..\..\Libraries\FWlib\inc\misc.h
 ..\..\Output\main.o: ..\..\HardWare\led.h

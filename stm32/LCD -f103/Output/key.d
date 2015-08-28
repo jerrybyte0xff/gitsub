@@ -12,6 +12,5 @@
 ..\..\Output\key.o: ..\..\HardWare\ssd1963_driver.h
 ..\..\Output\key.o: ..\..\SYSTEM\delay\delay.h
 ..\..\Output\key.o: ..\..\SYSTEM\sys\sys.h
-..\..\Output\key.o: ..\..\HardWare\ascii1608.h
 ..\..\Output\key.o: C:\Program Files (x86)\ARM\RV31\INC\math.h
 ..\..\Output\key.o: ..\..\Libraries\FWlib\inc\misc.h

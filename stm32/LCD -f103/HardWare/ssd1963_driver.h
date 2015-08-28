@@ -17,7 +17,6 @@
 #define __SSD1963_DRIVER_H__
 
 #include "delay.h"
-#include "ascii1608.h"
 #include "stm32f10x.h"  
 #include <math.h>
 
