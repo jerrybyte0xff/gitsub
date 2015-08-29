@@ -27,21 +27,21 @@
 
 
 /* LCD Control pins */
-#define LCD_SSD1963_Pin_WR      GPIO_Pin_13
-#define LCD_SSD1963_PORT_WR     GPIOB
-#define LCD_SSD1963_CLK_WR      RCC_APB2Periph_GPIOB
+#define LCD_SSD1963_Pin_WR      GPIO_Pin_3
+#define LCD_SSD1963_PORT_WR     GPIOC
+#define LCD_SSD1963_CLK_WR      RCC_APB2Periph_GPIOC
 
-#define LCD_SSD1963_Pin_RS      GPIO_Pin_11
-#define LCD_SSD1963_PORT_RS     GPIOB
-#define LCD_SSD1963_CLK_RS      RCC_APB2Periph_GPIOB
+#define LCD_SSD1963_Pin_RS      GPIO_Pin_1
+#define LCD_SSD1963_PORT_RS     GPIOC
+#define LCD_SSD1963_CLK_RS      RCC_APB2Periph_GPIOC
 
-#define LCD_SSD1963_Pin_RD      GPIO_Pin_12
-#define LCD_SSD1963_PORT_RD     GPIOB
-#define LCD_SSD1963_CLK_RD      RCC_APB2Periph_GPIOB
+#define LCD_SSD1963_Pin_RD      GPIO_Pin_2
+#define LCD_SSD1963_PORT_RD     GPIOC
+#define LCD_SSD1963_CLK_RD      RCC_APB2Periph_GPIOC
 
-#define LCD_SSD1963_Pin_CS      GPIO_Pin_10
-#define LCD_SSD1963_PORT_CS     GPIOB
-#define LCD_SSD1963_CLK_CS      RCC_APB2Periph_GPIOB
+#define LCD_SSD1963_Pin_CS      GPIO_Pin_0
+#define LCD_SSD1963_PORT_CS     GPIOC
+#define LCD_SSD1963_CLK_CS      RCC_APB2Periph_GPIOC
 
 
 #define LCD_WR_H  GPIO_SetBits(LCD_SSD1963_PORT_WR, LCD_SSD1963_Pin_WR);
@@ -53,6 +53,11 @@
 
 #define LCD_CS_H  GPIO_SetBits(LCD_SSD1963_PORT_CS, LCD_SSD1963_Pin_CS);
 #define LCD_CS_L  GPIO_ResetBits(LCD_SSD1963_PORT_CS, LCD_SSD1963_Pin_CS);
+
+#define LCD_RD_H  GPIO_SetBits(LCD_SSD1963_PORT_RD, LCD_SSD1963_Pin_RD);
+#define LCD_RD_L  GPIO_ResetBits(LCD_SSD1963_PORT_RD, LCD_SSD1963_Pin_RD);
+
+
 /** @defgroup 16-bit (565 format) color value.
   * @{
   */

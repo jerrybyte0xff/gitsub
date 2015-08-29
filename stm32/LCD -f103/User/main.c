@@ -51,8 +51,8 @@ int main(void)
 //		}
 	 	printf("\n\r  ("__DATE__ " - " __TIME__ ")");
 	 	LCD_SSD1963_clear(GREEN);
-	 	delay_ms(5000);
-	 	LCD_SSD1963_clear(YELLOW);
+	 	delay_ms(3000);
+		LCD_SSD1963_clear(YELLOW);
 
 	
 	  

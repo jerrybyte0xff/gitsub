@@ -19,27 +19,34 @@
 
 static void LCD_SSD1963_write_data(u16 color)
 {  
+		LCD_RD_H
 		LCD_RS_H
+		LCD_CS_L
 		LCD_WR_L
 		LCD_DATAPORT(color)		
 		LCD_WR_H
-}	  
-
+	  	LCD_CS_H
+}
 
 static void LCD_SSD1963_write_parameter(u16 parameter)   
 {  
-	
+		LCD_RD_H
 		LCD_RS_H
+		LCD_CS_L
 		LCD_WR_L
 		LCD_DATAPORT(parameter&0xff)	 
 		LCD_WR_H
+		LCD_CS_H
 }	
 static void LCD_SSD1963_write_command(u16 command)	 
 {	  
+		LCD_RD_H
 		LCD_RS_L
+		LCD_CS_L
 		LCD_WR_L
 		LCD_DATAPORT(command&0xff)
 		LCD_WR_H
+		LCD_CS_H
   
 }
 
@@ -47,9 +54,12 @@ static void LCD_SSD1963_read_parameter(u16 *p_parameter)
 {  
 	
 		LCD_WR_H
-		LCD_RS_L
-		*p_parameter = LCD_DATAREAD	 
+		LCD_RD_L
 		LCD_RS_H
+		LCD_CS_L
+		*p_parameter = LCD_DATAREAD	 
+		LCD_RD_H
+		LCD_CS_H
 }	
 	
 
@@ -97,7 +107,10 @@ void LCD_SSD1963_clear(u32 color)
 
 static void LCD_SSD1963_Pins_Config(void)
 {
+	
 	GPIO_InitTypeDef GPIO_InitStructure;
+	
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC | RCC_APB2Periph_GPIOE, ENABLE);
 
 	/* Data */
 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_All;
@@ -111,7 +124,7 @@ static void LCD_SSD1963_Pins_Config(void)
 	                              LCD_SSD1963_Pin_RD || 
 	                              LCD_SSD1963_Pin_WR ;
 	                              
-	GPIO_Init(GPIOB, &GPIO_InitStructure);
+	GPIO_Init(GPIOC, &GPIO_InitStructure);
 
 }
 
@@ -152,7 +165,7 @@ void LCD_SSD1963_init(void)
 
 	LCD_SSD1963_Pins_Config();
 	delay_ms(50);
-	LCD_CS_L
+	//LCD_CS_L
 		
 	/* Set PLL MN */
 	LCD_SSD1963_write_command(0x00E2);		//PLL = In *N / M
