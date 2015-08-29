@@ -6,8 +6,8 @@
   * @brief   LCD Driver program
   ******************************************************************************/
   
- #include "ili9806e.h"
-
+#include "ili9806e.h"
+#include "usart.h"	
 
 /*******************************************************************************
 * Function Name  : LCD_DB_AS_OutPut
@@ -27,12 +27,12 @@ void LCD_DB_AS_OutPut(void)
 	GPIO_Init(GPIOE, &GPIO_InitStructure);
 	
 	/* R Data */
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_8 ||  GPIO_Pin_9 || 
-	                              GPIO_Pin_10 || 
-	                              GPIO_Pin_11 || 
-	                              GPIO_Pin_12 || 
-	                              GPIO_Pin_13 || 
-	                              GPIO_Pin_14 || 
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_8  |  GPIO_Pin_9 | 
+	                              GPIO_Pin_10 | 
+	                              GPIO_Pin_11 | 
+	                              GPIO_Pin_12 | 
+	                              GPIO_Pin_13 | 
+	                              GPIO_Pin_14 | 
 	                              GPIO_Pin_15;
 	                              
 	GPIO_Init(GPIOD, &GPIO_InitStructure);
@@ -100,18 +100,18 @@ void LCD_WriteCtrlCommand(u8 LCD_CommandValue)
 	/*  Control pins Set Low */
 	LCD_CLRSCL
 	LCD_CLRSDA
-	LCD_SETCS
+	
 	LCD_CLRCS
 	
 	/*  SCL Set High */
 	delay_us(1);
 	LCD_SETSCL
-	delay_us(1);
+	//delay_us(1);
 	
 	/*  Write Data */
 	for (u8_DataCount = 0; u8_DataCount < 8; u8_DataCount++)
 	{
-		LCD_CLRSCL
+		
 		if (LCD_CommandValue & 0x80)
 		{
 			LCD_SETSDA
@@ -120,9 +120,10 @@ void LCD_WriteCtrlCommand(u8 LCD_CommandValue)
 		{
 			LCD_CLRSDA
 		}
-		delay_us(1);
+		LCD_CLRSCL
+		//delay_us(1);
 		LCD_SETSCL
-		delay_us(1);
+		//delay_us(1);
 		u8_DataCount = u8_DataCount << 1;
 	}
 	LCD_SETCS
@@ -159,12 +160,12 @@ void LCD_WriteCtrlData(u8 LCD_CtrlData)
 	/*  SCL Set High */
 	delay_us(1);
 	LCD_SETSCL
-	delay_us(1);
+	//delay_us(1);
 	
 	/*  Write Data */
 	for (u8_DataCount = 0; u8_DataCount < 8; u8_DataCount++)
 	{
-		LCD_CLRSCL
+		
 		if (LCD_CtrlData & 0x80)
 		{
 			LCD_SETSDA
@@ -173,9 +174,10 @@ void LCD_WriteCtrlData(u8 LCD_CtrlData)
 		{
 			LCD_CLRSDA
 		}
-		delay_us(1);
+		LCD_CLRSCL
+		//delay_us(1);
 		LCD_SETSCL
-		delay_us(1);
+		//delay_us(1);
 		LCD_CtrlData = LCD_CtrlData << 1;
 	}
 	LCD_SETCS
@@ -225,18 +227,18 @@ u16 LCD_ReadReg(u8 LCD_CommandValue)
 	/*  Control pins Set Low */
 	LCD_CLRSCL
 	LCD_SETSDA
-	LCD_SETCS
+
 	LCD_CLRCS
 	
 	/*  SCL Set High */
 	delay_us(1);
 	LCD_SETSCL
-	delay_us(1);
+	//delay_us(1);
 	
 	/*  Write Index */
 	for (u8_DataCount = 0; u8_DataCount < 8; u8_DataCount++)
 	{
-		LCD_CLRSCL
+		
 		if (LCD_CommandValue & 0x80)
 		{
 			LCD_SETSDA
@@ -245,10 +247,10 @@ u16 LCD_ReadReg(u8 LCD_CommandValue)
 		{
 			LCD_CLRSDA
 		}
-		delay_us(1);
+		LCD_CLRSCL
 		LCD_SETSCL
-		delay_us(1);
-		u8_DataCount = u8_DataCount << 1;
+		//delay_us(1);
+		LCD_CommandValue = LCD_CommandValue << 1;
 	}
 	
 	
@@ -260,9 +262,9 @@ u16 LCD_ReadReg(u8 LCD_CommandValue)
 		u8_ReadTemp = LCD_READDATABIT;
 		u8_ReadData = u8_ReadData | u8_ReadTemp;
 
-		delay_us(1);
+		//delay_us(1);
 		LCD_SETSCL
-		delay_us(1);
+		//delay_us(1);
 	}
 	return u8_ReadData;
 }
@@ -281,6 +283,7 @@ u16 LCD_ReadReg(u8 LCD_CommandValue)
 *******************************************************************************/
 void ILI9806E_Initializtion(void)
 {
+	u8 u8_ReadTemp;
 	
 	LCD_Pins_Config();
 	
@@ -291,6 +294,22 @@ void ILI9806E_Initializtion(void)
 	LCD_SETRES;
 	delay_ms(200);
 	//***************************************************************//LCD SETING
+	
+	LCD_WriteCtrlCommand(0xFF);        // Change to Page 0 CMD 
+	LCD_WriteCtrlData(0xFF); 
+	LCD_WriteCtrlData(0x98); 
+	LCD_WriteCtrlData(0x06); 
+	LCD_WriteCtrlData(0x04); 
+	LCD_WriteCtrlData(0x00); 
+	LCD_WriteCtrlCommand(0x01);        //Softe ware Reset
+
+	printf("ili9806e SofteWare Reset Success \n");
+	
+	/* set 18 bit /pixel */
+	LCD_WriteCtrlCommand(0x3A);
+	LCD_WriteCtrlData(0x60); //18BIT
+	printf("ili9806e 186bit set Success \n");
+	
 	LCD_WriteCtrlCommand(0xFF);        // Change to Page 1 CMD 
 	LCD_WriteCtrlData(0xFF); 
 	LCD_WriteCtrlData(0x98); 
@@ -300,19 +319,25 @@ void ILI9806E_Initializtion(void)
 	 
 	LCD_WriteCtrlCommand(0x08);        //Output    SDA 
 	LCD_WriteCtrlData(0x10); 
+	
+	u8_ReadTemp = LCD_ReadReg(0x08);
+	printf("SDA status:[%d]\n",u8_ReadTemp);
 
+	
+	
 	LCD_WriteCtrlCommand(0x20);        //set DE/VSYNC mode  
 	LCD_WriteCtrlData(0x00); 	
 
 	LCD_WriteCtrlCommand(0x21);        //DE = 1 Active 
 	LCD_WriteCtrlData(0x01); 
 	 
-	LCD_WriteCtrlCommand(0x30);        //Resolution setting 480 X 800 
-	LCD_WriteCtrlData(0x02); 
+	LCD_WriteCtrlCommand(0x30);        //Resolution setting 480 X 864 
+	LCD_WriteCtrlData(0x00); 
 	 
 	LCD_WriteCtrlCommand(0x31);        //Inversion setting 2-dot 
 	LCD_WriteCtrlData(0x02); 
-	 
+	 /*
+	 debug: is set in Page 0
 	LCD_WriteCtrlCommand(0x3A);      
 	//LCD_WriteCtrlData(0x50); //16BIT
 	LCD_WriteCtrlData(0x60); //18BIT
@@ -320,6 +345,8 @@ void ILI9806E_Initializtion(void)
 	//LCD_WriteCtrlData(0x1E); //186bit
 	//LCD_WriteCtrlData(0x2E); //18bit
 	//LCD_WriteCtrlData(0x3E); //24bit
+	printf("ili9806e 186bit set Success \n");
+	*/
 	 
 	LCD_WriteCtrlCommand(0x60);       
 	LCD_WriteCtrlData(0x07); 
@@ -594,5 +621,10 @@ void ILI9806E_Initializtion(void)
 	delay_ms(25);
 	LCD_WriteCtrlCommand(0x2C);
 	
+	
+	
+	LCD_SETSDA
+	LCD_SETCS
+	LCD_SETSCL
 
 }

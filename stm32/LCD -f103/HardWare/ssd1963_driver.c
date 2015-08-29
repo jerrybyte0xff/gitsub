@@ -22,8 +22,8 @@ static void LCD_SSD1963_write_data(u16 color)
 		LCD_RD_H
 		LCD_RS_H
 		LCD_CS_L
-		LCD_WR_L
-		LCD_DATAPORT(color)		
+		LCD_DATAPORT(color)	
+		LCD_WR_L	
 		LCD_WR_H
 	  	LCD_CS_H
 }
@@ -33,8 +33,9 @@ static void LCD_SSD1963_write_parameter(u16 parameter)
 		LCD_RD_H
 		LCD_RS_H
 		LCD_CS_L
+	    LCD_DATAPORT(parameter & 0xff)	//
 		LCD_WR_L
-		LCD_DATAPORT(parameter&0xff)	 
+		//LCD_DATAPORT(parameter&0xff)	 
 		LCD_WR_H
 		LCD_CS_H
 }	
@@ -43,8 +44,9 @@ static void LCD_SSD1963_write_command(u16 command)
 		LCD_RD_H
 		LCD_RS_L
 		LCD_CS_L
+		LCD_DATAPORT(command & 0xff)
 		LCD_WR_L
-		LCD_DATAPORT(command&0xff)
+		//LCD_DATAPORT(command&0xff)
 		LCD_WR_H
 		LCD_CS_H
   
@@ -53,11 +55,11 @@ static void LCD_SSD1963_write_command(u16 command)
 static void LCD_SSD1963_read_parameter(u16 *p_parameter)   
 {  
 	
+		LCD_RS_H
 		LCD_WR_H
 		LCD_RD_L
-		LCD_RS_H
 		LCD_CS_L
-		*p_parameter = LCD_DATAREAD	 
+		*p_parameter = LCD_DATAREAD	
 		LCD_RD_H
 		LCD_CS_H
 }	
@@ -119,12 +121,15 @@ static void LCD_SSD1963_Pins_Config(void)
 	GPIO_Init(GPIOE, &GPIO_InitStructure);
 	
 	/* R Data */
-	GPIO_InitStructure.GPIO_Pin = LCD_SSD1963_Pin_CS || 
-	                              LCD_SSD1963_Pin_RS || 
-	                              LCD_SSD1963_Pin_RD || 
+	GPIO_InitStructure.GPIO_Pin = LCD_SSD1963_Pin_CS | 
+	                              LCD_SSD1963_Pin_RS |
+	                              LCD_SSD1963_Pin_RD | 
 	                              LCD_SSD1963_Pin_WR ;
 	                              
 	GPIO_Init(GPIOC, &GPIO_InitStructure);
+	TESTIO_H
+	
+	printf("LCD_SSD1963_Pins_Config Success\n");
 
 }
 
@@ -167,6 +172,14 @@ void LCD_SSD1963_init(void)
 	delay_ms(50);
 	//LCD_CS_L
 		
+	
+	
+	 /* Software Reset */
+	LCD_SSD1963_write_command(0x0001);  
+	delay_ms(100);
+	printf("Software Reset \n");
+	
+	
 	/* Set PLL MN */
 	LCD_SSD1963_write_command(0x00E2);		//PLL = In *N / M
 	LCD_SSD1963_write_parameter(0x0024);    //N = 36, M = 3
@@ -183,10 +196,7 @@ void LCD_SSD1963_init(void)
 	LCD_SSD1963_write_parameter(0x0003);
 	delay_ms(100);
 
-   /* Software Reset */
-	LCD_SSD1963_write_command(0x0001);  
-	delay_ms(100);
-	printf("Software Reset \n");
+
 	
 
 	/* Set LSHIFT Frequency */

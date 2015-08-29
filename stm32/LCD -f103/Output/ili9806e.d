@@ -14,3 +14,5 @@
 ..\..\Output\ili9806e.o: ..\..\SYSTEM\sys\sys.h
 ..\..\Output\ili9806e.o: C:\Program Files (x86)\ARM\RV31\INC\math.h
 ..\..\Output\ili9806e.o: ..\..\Libraries\FWlib\inc\misc.h
+..\..\Output\ili9806e.o: ..\..\SYSTEM\usart\usart.h
+..\..\Output\ili9806e.o: C:\Program Files (x86)\ARM\RV31\INC\stdio.h

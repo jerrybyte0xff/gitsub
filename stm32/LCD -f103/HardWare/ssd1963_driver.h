@@ -57,6 +57,9 @@
 #define LCD_RD_H  GPIO_SetBits(LCD_SSD1963_PORT_RD, LCD_SSD1963_Pin_RD);
 #define LCD_RD_L  GPIO_ResetBits(LCD_SSD1963_PORT_RD, LCD_SSD1963_Pin_RD);
 
+/* TEST */
+#define TESTIO_H GPIO_SetBits(GPIOC, GPIO_Pin_7);
+
 
 /** @defgroup 16-bit (565 format) color value.
   * @{
