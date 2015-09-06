@@ -51,11 +51,11 @@ void LCD_Pins_Config(void)
 {
 	GPIO_InitTypeDef GPIO_InitStructure;
 
-	RCC_APB2PeriphClockCmd(LCD_CLK_CS | RCC_APB2Periph_GPIOE |
-                         LCD_CLK_SDA, ENABLE);
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOD | RCC_APB2Periph_GPIOE |
+                         RCC_APB2Periph_GPIOB, ENABLE);
 
 	/* Data Pin Config */
-	LCD_DB_AS_OutPut();
+	//LCD_DB_AS_OutPut();
 	
 	/*LCD_Pin_CS & RES */
 	GPIO_InitStructure.GPIO_Pin = LCD_Pin_CS | LCD_Pin_RES;
@@ -71,9 +71,7 @@ void LCD_Pins_Config(void)
 	GPIO_InitStructure.GPIO_Pin = LCD_Pin_SDA;
 	GPIO_Init(LCD_PORT_SDA, &GPIO_InitStructure);
   
-	LCD_SETCS
-	LCD_SETSCL
-	LCD_SETSDA
+
 }
 
 
@@ -90,28 +88,22 @@ void LCD_WriteCtrlCommand(u8 LCD_CommandValue)
 	/************************************
 	Variables Define
 	************************************/
-	u8 u8_DataCount;
-	
-	
-	u8_DataCount = 0;
+	u8 u8_DataCount = 0;
+
 	/************************************
 	Function 
 	************************************/
 	/*  Control pins Set Low */
+	LCD_CLRCS
 	LCD_CLRSCL
 	LCD_CLRSDA
-	
-	LCD_CLRCS
-	
-	/*  SCL Set High */
-	delay_us(1);
 	LCD_SETSCL
-	//delay_us(1);
+	
 	
 	/*  Write Data */
 	for (u8_DataCount = 0; u8_DataCount < 8; u8_DataCount++)
 	{
-		
+		LCD_CLRSCL
 		if (LCD_CommandValue & 0x80)
 		{
 			LCD_SETSDA
@@ -120,14 +112,12 @@ void LCD_WriteCtrlCommand(u8 LCD_CommandValue)
 		{
 			LCD_CLRSDA
 		}
-		LCD_CLRSCL
 		//delay_us(1);
 		LCD_SETSCL
 		//delay_us(1);
-		u8_DataCount = u8_DataCount << 1;
+		LCD_CommandValue = LCD_CommandValue << 1;
 	}
 	LCD_SETCS
-
 
 }
 
@@ -144,28 +134,21 @@ void LCD_WriteCtrlData(u8 LCD_CtrlData)
 	/************************************
 	Variables Define
 	************************************/
-	u8 u8_DataCount;
+	u8 u8_DataCount = 0;
 	
-	
-	u8_DataCount = 0;
 	/************************************
 	Function 
 	************************************/
 	/*  Control pins Set Low */
+	LCD_CLRCS
 	LCD_CLRSCL
 	LCD_SETSDA
-	LCD_SETCS
-	LCD_CLRCS
-	
-	/*  SCL Set High */
-	delay_us(1);
 	LCD_SETSCL
-	//delay_us(1);
 	
 	/*  Write Data */
 	for (u8_DataCount = 0; u8_DataCount < 8; u8_DataCount++)
 	{
-		
+		LCD_CLRSCL
 		if (LCD_CtrlData & 0x80)
 		{
 			LCD_SETSDA
@@ -174,10 +157,7 @@ void LCD_WriteCtrlData(u8 LCD_CtrlData)
 		{
 			LCD_CLRSDA
 		}
-		LCD_CLRSCL
-		//delay_us(1);
 		LCD_SETSCL
-		//delay_us(1);
 		LCD_CtrlData = LCD_CtrlData << 1;
 	}
 	LCD_SETCS
@@ -288,19 +268,19 @@ void ILI9806E_Initializtion(void)
 	LCD_Pins_Config();
 	
  	LCD_SETRES
-	delay_ms(10);
+	delay_ms(1);
 	LCD_CLRRES
 	delay_ms(50);
 	LCD_SETRES;
 	delay_ms(200);
-	//***************************************************************//LCD SETING
-	
+	//***************************************************************//LCD SETING	
 	LCD_WriteCtrlCommand(0xFF);        // Change to Page 0 CMD 
 	LCD_WriteCtrlData(0xFF); 
 	LCD_WriteCtrlData(0x98); 
 	LCD_WriteCtrlData(0x06); 
 	LCD_WriteCtrlData(0x04); 
 	LCD_WriteCtrlData(0x00); 
+	
 	LCD_WriteCtrlCommand(0x01);        //Softe ware Reset
 
 	printf("ili9806e SofteWare Reset Success \n");
@@ -322,31 +302,31 @@ void ILI9806E_Initializtion(void)
 	
 	u8_ReadTemp = LCD_ReadReg(0x08);
 	printf("SDA status:[%d]\n",u8_ReadTemp);
-
 	
 	
-	LCD_WriteCtrlCommand(0x20);        //set DE/VSYNC mode  
-	LCD_WriteCtrlData(0x00); 	
+	
+	LCD_WriteCtrlCommand(0x20);         //set DE/VSYNC mode  
+	LCD_WriteCtrlData(0x01); 			//VSYNC mode
+	//LCD_WriteCtrlData(0x00); 			//DE mode
 
-	LCD_WriteCtrlCommand(0x21);        //DE = 1 Active 
-	LCD_WriteCtrlData(0x01); 
+	LCD_WriteCtrlCommand(0x21);        //
+	LCD_WriteCtrlData(0x0D);  			// DE = 0 Active 
+	//LCD_WriteCtrlData(0x01);  			// DE = 1 Active 
+	
+	
+	/* Set Mode Of RGB  6 6 6 */
+	//LCD_WriteCtrlCommand(0x24);      
+	//LCD_WriteCtrlData(0x00); 
 	 
-	LCD_WriteCtrlCommand(0x30);        //Resolution setting 480 X 864 
-	LCD_WriteCtrlData(0x00); 
+	LCD_WriteCtrlCommand(0x30);        //Resolution setting
+	LCD_WriteCtrlData(0x00);  			//Resolution setting 480 X 864 
 	 
-	LCD_WriteCtrlCommand(0x31);        //Inversion setting 2-dot 
-	LCD_WriteCtrlData(0x02); 
-	 /*
-	 debug: is set in Page 0
+	LCD_WriteCtrlCommand(0x31);       
+	LCD_WriteCtrlData(0x02);  //Inversion setting 2-dot 
+	//LCD_WriteCtrlData(0x01);  //Inversion setting 1-dot 
+	
 	LCD_WriteCtrlCommand(0x3A);      
-	//LCD_WriteCtrlData(0x50); //16BIT
-	LCD_WriteCtrlData(0x60); //18BIT
-	//LCD_WriteCtrlData(0x0E); //16bit
-	//LCD_WriteCtrlData(0x1E); //186bit
-	//LCD_WriteCtrlData(0x2E); //18bit
-	//LCD_WriteCtrlData(0x3E); //24bit
-	printf("ili9806e 186bit set Success \n");
-	*/
+	LCD_WriteCtrlData(0x50); //16BIT
 	 
 	LCD_WriteCtrlCommand(0x60);       
 	LCD_WriteCtrlData(0x07); 
@@ -620,11 +600,6 @@ void ILI9806E_Initializtion(void)
 	LCD_WriteCtrlCommand(0x29);
 	delay_ms(25);
 	LCD_WriteCtrlCommand(0x2C);
-	
-	
-	
-	LCD_SETSDA
-	LCD_SETCS
-	LCD_SETSCL
+
 
 }
