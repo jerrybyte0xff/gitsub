@@ -9,9 +9,7 @@
   *          data.
   ******************************************************************************
   */
-  
-  
-  
+
   
 #ifndef __SSD1963_DRIVER_H__
 #define __SSD1963_DRIVER_H__
@@ -97,7 +95,7 @@
   VFP =  6
  */
   	
-
+#if 1
 /* HDP = HACT */
 #define  HDP  480    //Horizontal Display Period
   	
@@ -115,7 +113,45 @@
 #define  FPS  8	 	 //Vertical Display Period Start Positio
 #define  VPW  4 	 // LFRAME Pulse Width
 
+#endif
 
+ #if 0	
+  	
+  	#define  HDP  864    //Horizontal Display Period
+  	
+	 /* HT = HLW + HBP + HACT +HFP */
+	#define  HT   878   	//Horizontal Total
+	 /* HPS = HACT + HFP */	
+	#define  HPS  24     //LLINE Pulse Start Position
+	#define  LPS  8	      //	Horizontal Display Period Start Position
+	#define  HPW  4      //	LLINE Pulse Width
+
+
+	#define  VDP  480	 //Vertical Display Period
+	#define  VT   512    //Vertical Total
+	#define  VPS  20	 //	LFRAME Pulse Start Position
+	#define  FPS  8	 	 //Vertical Display Period Start Positio
+	#define  VPW  4 	 // LFRAME Pulse Width
+  #endif
+  	
+  #if 0	 	
+#define  HDP  479 //Hsync Display period 
+#define  HT   500 //Horizontal total period = (HT + 1) pixels // HSYNC period time 
+#define  HPS  11  //Horizontal Sync Pulse Start Position = (HPS + 1) pixels  //HSYNC back porch //30
+#define  LPS  6  //Horizontal Display Period Start Position = LPS pixels   // HSYNC front porch//20
+#define  HPW  4 //Horizontal Sync Pulse Width = (HPW + 1) pixels //HSYNC width //22
+
+#define  VDP  799  //Vsync Display period 
+#define  VT   830 //Vertical Total = (VT + 1) lines // SET VSYNC period time 
+#define  VPS  22   //Vertical Sync Pulse Start Position = VPS lines  // VSYNC back porch  //20
+#define  FPS  3  //Vertical Display Period Start Position = FPS lines. // SET VSYNC front porch //40
+#define  VPW  6    //Vertical Sync Pulse Width = (VPW + 1) lines //set VSYNC width //40
+  	
+ #endif
+  	
+  	
+  	
+  	
   	
  /* 	
 #define  HDP  469    //Horizontal Display Period

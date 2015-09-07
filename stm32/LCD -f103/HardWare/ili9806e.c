@@ -1,11 +1,17 @@
- /******************************************************************************
-  * @file    ILI9806E.c
-  * @author  jerry 
-  * @version V1.0
-  * @date    2015/08/24
-  * @brief   LCD Driver program
-  ******************************************************************************/
+
+/*****************************************************************************
+ * @file    ILI9806E.c
+ * @brief   Function abstraction layer file of the ssd1963 driver.
+ * @author  Jerry
+ * @date    2015.09.07
+*****************************************************************************/
+/*****************************************************************************
+ *        @(#)Copyright (C) Kywoo Beijing .
+*****************************************************************************/
   
+/*****************************************************************************
+ *   Include
+*****************************************************************************/
 #include "ili9806e.h"
 #include "usart.h"	
 
@@ -263,7 +269,7 @@ u16 LCD_ReadReg(u8 LCD_CommandValue)
 *******************************************************************************/
 void ILI9806E_Initializtion(void)
 {
-	u8 u8_ReadTemp;
+	//u8 u8_ReadTemp;
 	
 	LCD_Pins_Config();
 	
@@ -274,6 +280,7 @@ void ILI9806E_Initializtion(void)
 	LCD_SETRES;
 	delay_ms(200);
 	//***************************************************************//LCD SETING	
+#if 0
 	LCD_WriteCtrlCommand(0xFF);        // Change to Page 0 CMD 
 	LCD_WriteCtrlData(0xFF); 
 	LCD_WriteCtrlData(0x98); 
@@ -287,9 +294,10 @@ void ILI9806E_Initializtion(void)
 	
 	/* set 18 bit /pixel */
 	LCD_WriteCtrlCommand(0x3A);
-	LCD_WriteCtrlData(0x60); //18BIT
+	//LCD_WriteCtrlData(0x60); //18BIT
+	LCD_WriteCtrlData(0x50); //16BIT
 	printf("ili9806e 186bit set Success \n");
-	
+#endif	
 	LCD_WriteCtrlCommand(0xFF);        // Change to Page 1 CMD 
 	LCD_WriteCtrlData(0xFF); 
 	LCD_WriteCtrlData(0x98); 
@@ -300,18 +308,14 @@ void ILI9806E_Initializtion(void)
 	LCD_WriteCtrlCommand(0x08);        //Output    SDA 
 	LCD_WriteCtrlData(0x10); 
 	
-	u8_ReadTemp = LCD_ReadReg(0x08);
-	printf("SDA status:[%d]\n",u8_ReadTemp);
-	
 	
 	
 	LCD_WriteCtrlCommand(0x20);         //set DE/VSYNC mode  
 	LCD_WriteCtrlData(0x01); 			//VSYNC mode
-	//LCD_WriteCtrlData(0x00); 			//DE mode
 
 	LCD_WriteCtrlCommand(0x21);        //
-	LCD_WriteCtrlData(0x0D);  			// DE = 0 Active 
-	//LCD_WriteCtrlData(0x01);  			// DE = 1 Active 
+	//LCD_WriteCtrlData(0x0D);  			// DE = 0 Active 
+	LCD_WriteCtrlData(0x01);  			// DE = 1 Active 
 	
 	
 	/* Set Mode Of RGB  6 6 6 */

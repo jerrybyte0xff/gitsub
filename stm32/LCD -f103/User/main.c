@@ -27,89 +27,75 @@
 
 int main(void)
 {
-     //u32 temp = 0;
-	 delay_init(168);
-	 //GPIO_KEY_Config();
-	 uart_init(115200);
-	 NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
-	 ILI9806E_Initializtion();
-	 LCD_SSD1963_init();
+	//u32 temp = 0;
+	u16 i,ii;
+	delay_init(168);
+	uart_init(115200);
+	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
+	ILI9806E_Initializtion();
+	LCD_SSD1963_init();
+	
+
 /********************show image**********************/
-	 	printf("\n\r  ("__DATE__ " - " __TIME__ ")\n");
-	LCD_SSD1963_clear(RED);
-	LCD_SSD1963_putstring(20,20,"hello world",BLACK,BLUE);
-	
-#if 0
-	 	LCD_SSD1963_clear(GREEN);
-	 	delay_ms(5000);
+	while(1)
+	{
+		/*
+		delay_ms(500);		 
+		LCD_SSD1963_write_command(0x002c);
+		
+		for(ii=0;ii<480;ii++)
+		{
+			LCD_SSD1963_write_data(0xffff);
+			
+		}
+			
+		for(i=0;i<800;i++)
+		{
+			LCD_SSD1963_write_data(0xffff);
+			for(ii=0;ii<478;ii++)
+			{
+		  		LCD_SSD1963_write_data(0x0000);
+			}
+			LCD_SSD1963_write_data(0xffff);
+		}
+		for(i=0;i<480;i++)
+		{
+			LCD_SSD1963_write_data(0xffff);
 
-	 	LCD_SSD1963_drawrectangle(200, 200, 400, 400,1,RED);
 
-	(void) LCD_SSD1963_putstring(20,20,"hello world",BLACK,BLUE);
+		}
+		
+		*/
+		delay_ms(5000);	
+		LCD_SSD1963_drawrectangle(0, 0, 800, 800,1,RED);
+		delay_ms(5000);
+		
+		LCD_SSD1963_clear(BLUE);
+		delay_ms(5000);		
+		LCD_SSD1963_putstring(100,100,"hello world",BLACK,RED);
+		delay_ms(5000);	
+		LCD_SSD1963_drawrectangle(200, 200, 400, 400,1,RED);
+		
+		delay_ms(5000);	
+		 
+		/*
+		LCD_SSD1963_write_command(0x002C);	
+		
+		for(i = 0; i < 400; i++) 	 
+		{
+			for(ii = 0; ii < (HDP+1); ii++) 
+			{ 	
 
-	LCD_SSD1963_getpoint(0, 0, &temp);
+				LCD_SSD1963_write_data(GREEN);
+			}
+			
+			
+		}
+		*/
+	}
 	
-	printf("\n\r site:0-0:[%x]",temp);
 	
-	LCD_SSD1963_getpoint(10, 10, &temp);
-	
-	printf("\n\r site:10-10:[%x]",temp);
-	
-	LCD_SSD1963_getpoint(100, 100, &temp);
-	
-	printf("\n\r site:100-100:[%x]",temp);
-	
-	LCD_SSD1963_getpoint(200, 200, &temp);
-	
-	printf("\n\r site:200-200:[%x]",temp);
-	
-	LCD_SSD1963_getpoint(400, 400, &temp);
-	
-	printf("\n\r site:400-400:[%x]",temp);
-	
-	LCD_SSD1963_getpoint(0, 0, &temp);
-	
-	printf("\n\r site:0-0:[%x]",temp);
-	
-	LCD_SSD1963_getpoint(10, 10, &temp);
-	
-	printf("\n\r site:10-10:[%x]",temp);
-	
-	LCD_SSD1963_getpoint(100, 100, &temp);
-	
-	printf("\n\r site:100-100:[%x]",temp);
-	
-	LCD_SSD1963_getpoint(200, 200, &temp);
-	
-	printf("\n\r site:200-200:[%x]",temp);
-	
-	LCD_SSD1963_getpoint(400, 400, &temp);
-	
-	printf("\n\r site:400-400:[%x]",temp);
-	#endif
-#if 0
-	LCD_SSD1963_clear(RED);
-	delay_ms(5000);
-	LCD_SSD1963_clear(WHITE);
-	delay_ms(5000);
-	LCD_SSD1963_clear(YELLOW);
-	delay_ms(5000);
-	LCD_SSD1963_clear(BLUE);
-	delay_ms(5000);
-	LCD_SSD1963_clear(BLACK);
-	delay_ms(5000);
-	LCD_SSD1963_clear(BROWN);
-	delay_ms(5000);
-	LCD_SSD1963_clear(GRAY);
-	delay_ms(5000);
-	LCD_SSD1963_clear(YELLOW);
-	
-#endif
-	
-	//LCD_DrawPicture(0,0,400,400,gImage_baozi);
-//(void) LCD_SSD1963_putstring(20,20,"hello world",BLACK,BLUE);
-	while(1);
-	 
+
 }
 
 /*********************************************END OF FILE**********************/
