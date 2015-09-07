@@ -45,7 +45,7 @@
 ### ADS-LD Output File: '..\..\Output\STM32_LCD.axf'
 ### ADS-LD Command File: '..\..\Output\STM32_LCD.lnp'
 ### Checking for dirty Components...
-### Creating CmdFile '..\..\Output\STM32_LCD.lnp', Handle=0x00000478
+### Creating CmdFile '..\..\Output\STM32_LCD.lnp', Handle=0x0000039C
 ### Writing '.lnp' file
 ### ADS-LD Command file '..\..\Output\STM32_LCD.lnp' is ready.
 ### ADS-LD: About to start ADS-LD Thread.

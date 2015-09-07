@@ -434,7 +434,7 @@ void LCD_SSD1963_init(void)
 
 	delay_ms(100);
 	
-	//LCD_SSD1963_clear(WHITE);
+	LCD_SSD1963_clear(WHITE);
 
 }
 

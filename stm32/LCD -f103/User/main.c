@@ -66,18 +66,17 @@ int main(void)
 		}
 		
 		*/
-		delay_ms(5000);	
-		LCD_SSD1963_drawrectangle(0, 0, 800, 800,1,RED);
-		delay_ms(5000);
 		
-		LCD_SSD1963_clear(BLUE);
-		delay_ms(5000);		
+		
+		LCD_SSD1963_clear(RED);
+		delay_ms(5000);	
+		/*	
 		LCD_SSD1963_putstring(100,100,"hello world",BLACK,RED);
 		delay_ms(5000);	
 		LCD_SSD1963_drawrectangle(200, 200, 400, 400,1,RED);
 		
 		delay_ms(5000);	
-		 
+		 */
 		/*
 		LCD_SSD1963_write_command(0x002C);	
 		
