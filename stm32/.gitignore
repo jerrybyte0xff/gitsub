@@ -1,0 +1,41 @@
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.axf
+*.crf
+JLinkLog.txt
+*.htm
+*.lst
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.ld
+
+# Compiled binaries
+*.bin
+*.elf
+*.hex
+*.map
+
+# Eclipse workfiles
+*.xml
+
+# CooCox workfiles
+*.cogui
+*.comarker
+#*.coproj
+*.pbxproj
+*.comemgui
+*.cproject
+*.project
+debug.config
+
+# Trash
+*.bak

@@ -1,0 +1,71 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_JP_AUTHOR	Hirohito Higashi	/h_east@pop11.odn.ne.jp/
+!_TAG_PROGRAM_JP_URL	http://hp.vector.co.jp/authors/VA025040/	//
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.7J1	//
+BLACK	ssd1963_driver.h	31;"	d
+BLACK	ssd1963_driver.h	44;"	d
+BLUE	ssd1963_driver.h	32;"	d
+BLUE	ssd1963_driver.h	45;"	d
+BROWN	ssd1963_driver.h	38;"	d
+BROWN	ssd1963_driver.h	51;"	d
+CONFIGMCUFORLCD	ssd1963_hal_stm32.h	79;"	d
+CONFIGMCUFROMDRIVER	ssd1963_hal_stm32.h	36;"	d
+CYAN	ssd1963_driver.h	36;"	d
+CYAN	ssd1963_driver.h	49;"	d
+DELAYMS	ssd1963_hal_stm32.h	76;"	d
+FPS	ssd1963_hal_stm32.h	73;"	d
+GRAY	ssd1963_driver.h	39;"	d
+GRAY	ssd1963_driver.h	52;"	d
+GREEN	ssd1963_driver.h	35;"	d
+GREEN	ssd1963_driver.h	48;"	d
+HDP	ssd1963_hal_stm32.h	63;"	d
+HPS	ssd1963_hal_stm32.h	65;"	d
+HPW	ssd1963_hal_stm32.h	67;"	d
+HT	ssd1963_hal_stm32.h	64;"	d
+LCD_DATAPORT	ssd1963_hal_stm32.h	39;"	d
+LCD_DATAPORT	ssd1963_hal_stm32.h	41;"	d
+LCD_RS_H	ssd1963_hal_stm32.h	48;"	d
+LCD_RS_L	ssd1963_hal_stm32.h	49;"	d
+LCD_WR_H	ssd1963_hal_stm32.h	45;"	d
+LCD_WR_L	ssd1963_hal_stm32.h	46;"	d
+LPS	ssd1963_hal_stm32.h	66;"	d
+MAGENTA	ssd1963_driver.h	34;"	d
+MAGENTA	ssd1963_driver.h	47;"	d
+PIXELDATA_8BIT	ssd1963_hal_stm32.h	35;"	d
+RED	ssd1963_driver.h	33;"	d
+RED	ssd1963_driver.h	46;"	d
+VDP	ssd1963_hal_stm32.h	70;"	d
+VPS	ssd1963_hal_stm32.h	72;"	d
+VPW	ssd1963_hal_stm32.h	74;"	d
+VT	ssd1963_hal_stm32.h	71;"	d
+WHITE	ssd1963_driver.h	30;"	d
+WHITE	ssd1963_driver.h	43;"	d
+YELLOW	ssd1963_driver.h	37;"	d
+YELLOW	ssd1963_driver.h	50;"	d
+__SSD1963_DRIVER_H__	ssd1963_driver.h	17;"	d
+__SSD1963_HAL_STM32_H__	ssd1963_hal_stm32.h	31;"	d
+delay_ms	ssd1963_hal_stm32.c	33;"	f
+int_16	ssd1963_hal_stm32.h	57;"	d
+int_32	ssd1963_hal_stm32.h	58;"	d
+int_8	ssd1963_hal_stm32.h	56;"	d
+lcd_clear	ssd1963_driver.c	78;"	f
+lcd_drawcircle	ssd1963_driver.c	485;"	f
+lcd_drawline	ssd1963_driver.c	309;"	f
+lcd_drawpoint	ssd1963_driver.c	226;"	f
+lcd_drawrectangle	ssd1963_driver.c	459;"	f
+lcd_init	ssd1963_driver.c	115;"	f
+lcd_putchar	ssd1963_driver.c	254;"	f
+lcd_putstring	ssd1963_driver.c	290;"	f
+lcd_windowmax	ssd1963_driver.c	436;"	f	file:
+lcd_write_command	ssd1963_driver.c	60;"	f	file:
+lcd_write_data	ssd1963_driver.c	19;"	f	file:
+lcd_write_data	ssd1963_driver.c	43;"	f	file:
+lcd_write_parameter	ssd1963_driver.c	52;"	f	file:
+rcc_and_gpio_configuration	ssd1963_hal_stm32.c	18;"	f
+uint_16	ssd1963_hal_stm32.h	54;"	d
+uint_32	ssd1963_hal_stm32.h	55;"	d
+uint_8	ssd1963_hal_stm32.h	53;"	d
