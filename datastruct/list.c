@@ -1,13 +1,15 @@
 //
-//  main.c
+//  list.c
 //  List
 //
 //  Created by jerry on 16/4/18.
-//  Copyright © 2016年 jerry. All rights reserved.
+//  Copyright c 2016年 jerry. All rights reserved.
 //
 
 #include <stdio.h>
 #include <stdlib.h>
+
+/*  element value tpye */
 #define ELEMENT_TYPE int
 
 typedef struct _LIST
@@ -17,8 +19,9 @@ typedef struct _LIST
     
 }LIST;
 
-LIST *List;
 
+
+/* Get The length Of the List  */
 int List_GetLength(LIST *ListHeader)
 {
     int i_ListLength = 0;
@@ -33,7 +36,7 @@ int List_GetLength(LIST *ListHeader)
     return i_ListLength;
 }
 
-
+/* Find The Element Of The List From The number (The First element`s number is 0)  */
 LIST *List_FindAccordingNumber (LIST *ListHeader, int number)
 {
     LIST *list = ListHeader;
@@ -48,6 +51,7 @@ LIST *List_FindAccordingNumber (LIST *ListHeader, int number)
     return list;
 }
 
+/* Find The Element Of The List From The Value (The First element`s number is 0)  */
 LIST *List_FindAccordingValue (LIST *ListHeader, ELEMENT_TYPE Value)
 {
     LIST *list = ListHeader;
@@ -61,25 +65,23 @@ LIST *List_FindAccordingValue (LIST *ListHeader, ELEMENT_TYPE Value)
 }
 
 /*
- 
+  insert the element  according the number
  */
 
 LIST *List_Insert(LIST *ListHeader, int number, ELEMENT_TYPE Value)
 {
     LIST * ListBefore = NULL;
-    
-
-    
-    LIST  *InsertObject = (LIST*)malloc(sizeof(LIST));
-    
-    InsertObject->value = Value;
-    
+    LIST  *InsertObject = NULL;
+	
     if (0 == number)
     {
-        InsertObject->Next = ListHeader;
+    	printf("insert number error (0 is not allowed)\n");
+    	return NULL;
     }
     else
     {
+    	InsertObject = (LIST*)malloc(sizeof(LIST));
+    	InsertObject->value = Value;
         ListBefore = List_FindAccordingNumber(ListHeader, number - 1);
     
         if (NULL == ListBefore)
@@ -101,6 +103,9 @@ LIST *List_Insert(LIST *ListHeader, int number, ELEMENT_TYPE Value)
     
 }
 
+/*
+  delete the element  according the number
+ */
 LIST *List_Delete(LIST *ListHeader, int number)
 {
     LIST * ListBefore = NULL;
@@ -140,6 +145,7 @@ LIST *List_Delete(LIST *ListHeader, int number)
     
 }
 
+/* Main test */
 
 int main(int argc, const char * argv[]) {
     // insert code here...
@@ -147,14 +153,14 @@ int main(int argc, const char * argv[]) {
     LIST Listheader ={0,NULL};
     LIST *list = &Listheader;
     
-    List_Insert(list, 0, 11);
-    printf("0!\n");
+    List_Insert(list, 1, 11);
 
-    List_Insert(list, 0, 0);
-     printf("1!\n");
+
     List_Insert(list, 2, 22);
-     printf("2!\n");
+ 
     List_Insert(list, 3, 33);
+
+    List_Insert(list, 4, 44);
     printf("0:%d",list->value);
 
     printf("2:%d",List_FindAccordingNumber(list, 2)->value);
