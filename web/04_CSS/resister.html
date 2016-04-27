@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="utf-8">
+
+	<title>表单元素</title>
+	<link rel="stylesheet" type="text/css" id="style1" href="style.css">
+	<link rel="stylesheet" type="text/css" href="test.css">
+	<style type="text/css">
+	/*p{
+		color: red;
+		font-size: 50px;
+	}*/
+
+	</style>
+</head>
+<body>
+	<!-- <p style="color: red;font-siz: 50px;">欢迎注册</p> -->
+	<p>欢迎注册<b>kywoo<b></p>
+
+	<form  method="post"  id="resister">
+	<!-- <fomr action="http://www.sina.com" method="post" target="_blank" id="resister"> -->
+		<fieldset>
+		<legend style="color: blue ">注册</legend>
+		<label style="color: red;">
+		用户名<input name="user_name" autofocus placeholder="请输入用户名" required>
+		</label>
+		<br>
+		<label>
+		电子邮件<input name="e-mail" type="email" placeholder="请输入电子邮件" required><br>
+		</label>
+		<!-- 性别<input name="sex" type="text" list="list_sex"><br> -->
+		性别<input name="sex" type="radio" value="1">男
+		    <input name="sex" type="radio" value="2">女<br>
+		年龄<input name="age" type="number" value="21" min="0" max="100" step="1"><br>
+		出生日期<input name="birth" type="date" value="1990-04-12"><br>
+		密码<input name="password" type="password" placeholder="请输入密码" required><br>
+		确认密码<input name="password" type="password" placeholder="请再次输入" required><br>
+		
+		<input name="id" value="1" type="hidden"/>
+		上传头像 <input type="file" accept="image/gif,.jpg" name="touxiang" ">
+
+		<br>
+
+		
+		<a href="http:www.baidu.com" target="_blank">用户协议</a> <br>
+		<span style="color:red;font-weight:bold;">我已阅读并同意用户协议</span>
+		<br>
+		<input name="agree" type="radio" value="1" > 
+		
+		<span style="color:red;text-align:center">同意</span> 
+		<input name="agree" type="radio" value="0" > 
+		<span style="color:red;text-align:center">拒绝</span> <br>
+
+		<input type="reset" value="清空" class="button" />
+		<input type="submit" value="注册"class="button" /><br>
+		</fieldset>
+
+
+
+	</form>
+	
+
+
+	<datalist id="list_sex">
+		<option value="男">  man</option>
+		<option value="女">  women</option>
+		<option value="不明">  </option>
+	</datalist>
+
+	<br>
+	<br>
+	<br>
+	
+</body>
+</html>

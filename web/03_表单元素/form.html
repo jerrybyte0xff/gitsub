@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="utf-8">
+	<meta  http-equiv="refresh" content="3; url=http://www.baidu.com">
+	<title>表单元素</title>
+</head>
+<body>
+	<form action="http://www.sina.com" method="get" target="_blank" id="resister">
+		<fieldset>
+		<legend>注册</legend>
+		<label>
+		用户名<input name="user_name" autofocus placeholder="请输入用户名" required>
+		</label>
+		<br>
+		<label>
+		电子邮件<input name="e-mail" type="email" placeholder="请输入电子邮件" required><br>
+		</label>
+		<!-- 性别<input name="sex" type="text" list="list_sex"><br> -->
+		性别<input name="sex" type="radio" value="1">男
+		    <input name="sex" type="radio" value="2">女<br>
+		年龄<input name="age" type="number" value="21" min="0" max="100" step="1"><br>
+		出生日期<input name="birth" type="date" value="1990-04-12"><br>
+		密码<input name="password" type="password" placeholder="请输入密码" required><br>
+		确认密码<input name="password" type="password" placeholder="请再次输入" required><br>
+		
+		<input name="id" value="1" type="hidden"/>
+		上传头像 <input type="file" accept="image/gif,.jpg" name="touxiang" ">
+
+		<br>
+
+		<button>提交</button>
+		<button type="reset">重置</button>
+		<input type="reset" />
+		</fieldset>
+
+		喜欢的水果<br>
+		<select name="fruit" multiple="3" size="5">
+		<option value="1"> 苹果</option>
+		<option value="2"> 香蕉</option>
+		<option value="3"> 橘子</option>
+		<option value="4"> 菠萝</option>
+
+		</select>
+
+	</form>
+
+	<datalist id="list_sex">
+		<option value="男">  man</option>
+		<option value="女">  women</option>
+		<option value="不明">  </option>
+	</datalist>
+
+	<br>
+	<br>
+	<br>
+	意见建议:<br><textarea name="advice" form="resister"   value="建议" rows="10 cols="30" " ></textarea>
+</body>
+</html>
